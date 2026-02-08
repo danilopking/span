@@ -17,80 +17,136 @@
       --warn:#92400e;
       --warnbg:#ffedd5;
       --border:#e5e7eb;
+      --track:#d1d5db;
+      --blue:#1d4ed8;
     }
+
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background: var(--bg);
       color: var(--text);
     }
-    .wrap{ max-width: 820px; margin: 0 auto; padding: 18px; }
+
+    .wrap{ max-width: 920px; margin: 0 auto; padding: 18px; }
+
     .card{
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
+      border-radius: 16px;
+      padding: 18px;
       box-shadow: 0 6px 18px rgba(0,0,0,.06);
     }
-    h1{ font-size: 18px; margin: 0 0 8px 0; }
-    .hint{ color: var(--muted); font-size: 13px; margin-bottom: 12px; }
-    .rows{ position: relative; padding: 8px 0 0 0; }
+
+    h1{ font-size: 22px; margin: 0 0 8px 0; }
+    .hint{ color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+
+    /* rows area */
+    .rows{
+      position: relative;
+      padding-top: 8px;
+      padding-bottom: 10px;
+    }
+
     .row{
       display: grid;
-      grid-template-columns: 170px 1fr 40px;
-      gap: 12px;
+      grid-template-columns: 220px 1fr 54px;
+      gap: 14px;
       align-items: center;
-      padding: 12px 0;
+      padding: 14px 0;
     }
+
     .label{
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 750;
+      line-height: 1.2;
     }
-    .sub{
+
+    .sliderwrap{ width: 100%; }
+    .ends{
       display:flex;
       justify-content: space-between;
+      font-size:12px;
       color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
-    input[type="range"]{ width:100%; }
+
     .val{
-      width: 40px;
-      height: 34px;
+      width: 54px;
+      height: 42px;
       display:flex;
       align-items:center;
       justify-content:center;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 12px;
+      font-weight: 800;
       background: #fafafa;
     }
 
-    /* Overlay SVG for the connecting polyline */
+    /* Range styling (modern-ish) */
+    input[type="range"]{
+      width:100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--blue) 0%, var(--blue) 50%, var(--track) 50%, var(--track) 100%);
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--blue);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb{
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--blue);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.18);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-track{
+      height: 8px;
+      border-radius: 999px;
+      background: var(--track);
+    }
+
+    /* overlay only over slider area */
     .overlay{
       position:absolute;
-      left: 170px;   /* starts where sliders start */
-      right: 52px;   /* stops before the value boxes */
-      top: 0;
-      bottom: 0;
+      left: 220px;   /* start where sliders start */
+      right: 68px;   /* stop before value boxes */
+      top: 8px;
+      height: 250px; /* covers 4 rows area */
       pointer-events:none;
+      overflow: visible;
     }
 
     .gapbar{
       display:flex;
       align-items:center;
       gap: 10px;
-      margin: 10px 0 0 0;
+      margin: 12px 0 0 0;
     }
     .gaplabel{
       color: var(--accent);
-      font-weight: 700;
-      font-size: 13px;
+      font-weight: 850;
+      font-size: 14px;
       white-space: nowrap;
     }
     .gapval{
-      font-weight: 800;
+      font-weight: 900;
       color: var(--accent);
+      font-size: 16px;
+      white-space: nowrap;
     }
     .gapline{
       height: 2px;
@@ -116,28 +172,29 @@
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 12px;
-      font-weight: 700;
+      font-weight: 800;
       display:flex;
       align-items:center;
       gap:10px;
     }
     .status.ok{ background: var(--okbg); color: var(--ok); }
     .status.warn{ background: var(--warnbg); color: var(--warn); }
+
     .small{
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 650;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 7px;
     }
 
-    /* Make it embed-friendly */
-    @media (max-width: 640px){
+    @media (max-width: 720px){
       .row{ grid-template-columns: 1fr; }
-      .overlay{ display:none; } /* overlay is fiddly on tiny widths, so hide it */
+      .overlay{ display:none; }
       .val{ width: 100%; }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card">
@@ -145,47 +202,47 @@
       <div class="hint">Move sliders. The line shows how the job “connects”. Because humans love visual guilt.</div>
 
       <div class="rows" id="rows">
-        <svg class="overlay" id="overlaySvg" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <polyline id="poly" fill="none" stroke="var(--line)" stroke-width="1.8" points=""></polyline>
-          <circle id="c1" r="1.6" fill="var(--line)"></circle>
-          <circle id="c2" r="1.6" fill="var(--line)"></circle>
-          <circle id="c3" r="1.6" fill="var(--line)"></circle>
-          <circle id="c4" r="1.6" fill="var(--line)"></circle>
+        <svg class="overlay" id="overlaySvg">
+          <polyline id="poly" fill="none" stroke="var(--line)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" points=""></polyline>
+          <circle id="c1" r="8" fill="var(--line)"></circle>
+          <circle id="c2" r="8" fill="var(--line)"></circle>
+          <circle id="c3" r="8" fill="var(--line)"></circle>
+          <circle id="c4" r="8" fill="var(--line)"></circle>
         </svg>
 
         <div class="row" data-key="control">
-          <div>
-            <div class="label">Span of Control</div>
-            <div class="sub"><span>Few resources</span><span>Many resources</span></div>
+          <div class="label">Span of Control</div>
+          <div class="sliderwrap">
+            <input type="range" min="1" max="10" value="3" step="1" />
+            <div class="ends"><span>Few resources</span><span>Many resources</span></div>
           </div>
-          <input type="range" min="1" max="10" value="3" step="1" />
           <div class="val">3</div>
         </div>
 
         <div class="row" data-key="accountability">
-          <div>
-            <div class="label">Span of Accountability</div>
-            <div class="sub"><span>Few trade-offs</span><span>Many trade-offs</span></div>
+          <div class="label">Span of Accountability</div>
+          <div class="sliderwrap">
+            <input type="range" min="1" max="10" value="8" step="1" />
+            <div class="ends"><span>Few trade-offs</span><span>Many trade-offs</span></div>
           </div>
-          <input type="range" min="1" max="10" value="8" step="1" />
           <div class="val">8</div>
         </div>
 
         <div class="row" data-key="influence">
-          <div>
-            <div class="label">Span of Influence</div>
-            <div class="sub"><span>Within unit</span><span>Across units</span></div>
+          <div class="label">Span of Influence</div>
+          <div class="sliderwrap">
+            <input type="range" min="1" max="10" value="2" step="1" />
+            <div class="ends"><span>Within unit</span><span>Across units</span></div>
           </div>
-          <input type="range" min="1" max="10" value="2" step="1" />
           <div class="val">2</div>
         </div>
 
         <div class="row" data-key="support">
-          <div>
-            <div class="label">Span of Support</div>
-            <div class="sub"><span>No help</span><span>Others help</span></div>
+          <div class="label">Span of Support</div>
+          <div class="sliderwrap">
+            <input type="range" min="1" max="10" value="5" step="1" />
+            <div class="ends"><span>No help</span><span>Others help</span></div>
           </div>
-          <input type="range" min="1" max="10" value="5" step="1" />
           <div class="val">5</div>
         </div>
       </div>
@@ -208,7 +265,6 @@
 
 <script>
   const rows = [...document.querySelectorAll(".row")];
-  const svg = document.getElementById("overlaySvg");
   const poly = document.getElementById("poly");
   const circles = [1,2,3,4].map(i => document.getElementById("c"+i));
   const gapVal = document.getElementById("gapVal");
@@ -216,7 +272,6 @@
   const statusIcon = document.getElementById("statusIcon");
   const statusText = document.getElementById("statusText");
 
-  // tweak this threshold to your taste
   const BALANCE_THRESHOLD = 3;
 
   function getValues(){
@@ -236,26 +291,47 @@
     });
   }
 
-  function setSvgViewBox(){
-    // keep overlay viewBox at 100x100 for easy percent mapping
-    svg.setAttribute("viewBox", "0 0 100 100");
-  }
-
-  function sliderToPercent(v){
-    // v is 1..10 => 0..100
-    return ((v - 1) / 9) * 100;
+  // paint the "filled" part of the slider track
+  function paintTracks(){
+    rows.forEach(r => {
+      const input = r.querySelector('input[type="range"]');
+      const min = parseFloat(input.min || "1");
+      const max = parseFloat(input.max || "10");
+      const val = parseFloat(input.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      input.style.background = `linear-gradient(to right, var(--blue) 0%, var(--blue) ${pct}%, var(--track) ${pct}%, var(--track) 100%)`;
+    });
   }
 
   function updatePolyline(){
-    // map each row to a y position in SVG percent space
-    const total = rows.length;
-    const yStep = 100 / (total + 1);
-    const vals = getValues();
+    const overlay = document.getElementById("overlaySvg");
+    const overlayRect = overlay.getBoundingClientRect();
+
+    const w = overlayRect.width;
+    const h = overlayRect.height;
+    overlay.setAttribute("width", w);
+    overlay.setAttribute("height", h);
+    overlay.setAttribute("viewBox", `0 0 ${w} ${h}`);
+
     const order = ["control","accountability","influence","support"];
 
-    const points = order.map((k, idx) => {
-      const x = sliderToPercent(vals[k]);
-      const y = (idx + 1) * yStep;
+    const points = order.map((key) => {
+      const row = rows.find(r => r.dataset.key === key);
+      const input = row.querySelector('input[type="range"]');
+
+      const min = parseFloat(input.min || "1");
+      const max = parseFloat(input.max || "10");
+      const val = parseFloat(input.value);
+      const t = (val - min) / (max - min);
+
+      const inputRect = input.getBoundingClientRect();
+
+      // thumb radius approximation, helps align with the visual thumb
+      const thumb = 18;
+      const x = (inputRect.left - overlayRect.left) + thumb + t * (inputRect.width - 2*thumb);
+
+      const y = (inputRect.top - overlayRect.top) + inputRect.height / 2;
+
       return {x, y};
     });
 
@@ -268,7 +344,7 @@
 
   function updateGapAndStatus(){
     const v = getValues();
-    const gap = v.accountability - v.control; // simple version
+    const gap = v.accountability - v.control;
     gapVal.textContent = (gap >= 0 ? "+" : "") + gap;
 
     const arr = Object.values(v);
@@ -291,7 +367,7 @@
 
   function updateAll(){
     updateValueBoxes();
-    setSvgViewBox();
+    paintTracks();
     updatePolyline();
     updateGapAndStatus();
   }
